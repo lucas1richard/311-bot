@@ -12,6 +12,12 @@ const Channel = sequelize.define('channel', {
   },
   long: {
     type: Sequelize.STRING
+  },
+  subject: {
+    type: Sequelize.STRING
+  },
+  description: {
+    type: Sequelize.TEXT
   }
 });
 
