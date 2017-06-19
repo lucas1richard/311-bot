@@ -22,3 +22,4 @@ const Channel = sequelize.define('channel', {
 });
 
 module.exports = Channel;
+

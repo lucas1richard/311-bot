@@ -9,9 +9,6 @@ function publish2() {
 
   var arrChannels = ['channel1', 'channel2', 'channel3', 'channel4'];
 
-
-
-
   function publishChannel(channelName) {
     const publishConfig = {
       uuid: 'uuid',
@@ -24,26 +21,26 @@ function publish2() {
     });
   }
 
- arrChannels.forEach(channelName => {
-   publishChannel(channelName);
- });
+  arrChannels.forEach(channelName => {
+    publishChannel(channelName);
+  });
 
-/*
-    pubnub.addListener({
-      status(statusEvent) {
-        if (statusEvent.category === 'PNConnectedCategory') {
-          publishChannel(channelName);
+  /*
+      pubnub.addListener({
+        status(statusEvent) {
+          if (statusEvent.category === 'PNConnectedCategory') {
+            publishChannel(channelName);
+          }
+        },
+        message(msg) {
+          console.log('New message!', msg);
+
+        },
+        presence(presenceEvent) {
+          // handle presence
         }
-      },
-      message(msg) {
-        console.log('New message!', msg);
-
-      },
-      presence(presenceEvent) {
-        // handle presence
-      }
-    });
-*/
+      });
+  */
   console.log('Subscribing to all channels...');
 
   pubnub.subscribe({
@@ -52,8 +49,7 @@ function publish2() {
   });
 
   // Get all the channels
-  pubnub.hereNow(
-    {
+  pubnub.hereNow({
       includeUUIDs: true,
       includeState: true,
     },
@@ -71,8 +67,7 @@ function publish2() {
     console.log(error);
   });
 
-
-
 }
 
 module.exports = publish2;
+

@@ -16,11 +16,11 @@ class LogInForm extends React.Component {
   }
 
   changeEmail(ev) {
-    this.setState({ subject: ev.target.value });
+    this.setState({ email: ev.target.value });
   }
 
   changePassword(ev) {
-    this.setState({ description: ev.target.value });
+    this.setState({ password: ev.target.value });
   }
 
   submitForm(ev) {
