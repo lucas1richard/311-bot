@@ -1,0 +1,24 @@
+{
+  "name": "311-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucas1richard/311-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucas1richard/311-bot/issues"
+  },
+  "homepage": "https://github.com/lucas1richard/311-bot#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "pubnub": "^4.10.0"
+  }
+}
