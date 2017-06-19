@@ -3,7 +3,7 @@ const path = require( 'path' );
 const app = express();
 const db = require('./db');
 
-db.sync();
+db.seed();
 
 app.listen( 3000, () => console.log( 'Listening on 3000' ) );
 
