@@ -7,7 +7,6 @@ function publish() {
   } );
 
   function publishSampleMessage() {
-    console.log( 'Blablablabla' );
 
     const publishConfig = {
       channel: 'testname',
@@ -36,7 +35,7 @@ function publish() {
 
   console.log( 'Subscribing..' );
   pubnub.subscribe( {
-    channels: [ 'testname' ]
+    channels: [ 'testname2' ]
   } );
 
 
