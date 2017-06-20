@@ -49,7 +49,12 @@ class PubForm extends React.Component {
 
   submitForm(ev) {
     ev.preventDefault();
-    this.props.submitChannel(this.state);
+    this.getPosition()
+      .then(coordinates => {
+        this.setState(this.showPosition(coordinates), () => {
+          this.props.submitChannel(this.state);
+        });
+      });
   }
 
   render() {
@@ -67,7 +72,7 @@ class PubForm extends React.Component {
               className="form-control"
             />
           </div>
-          <div className="form-group">
+          {/*<div className="form-group">
             <label>Description</label>
             <input
               type="text"
@@ -75,12 +80,12 @@ class PubForm extends React.Component {
               onChange={this.changeDescription}
               className="form-control"
             />
-          </div>
+          </div>*/}
           <div className="form-group">
             <label>Message</label>
             <textarea
-              value={this.state.message}
-              onChange={this.changeMessage}
+              value={this.state.description}
+              onChange={this.changeDescription}
               rows={4}
               className="form-control"
             />
