@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const db = require('../db');
+const publish = require('../pubnub');
 
 module.exports = router;
 
@@ -12,6 +13,7 @@ router.get( '/', ( req, res, next ) => {
 } );
 
 router.post('/', (req, res, next) => {
+  publish(req.body.subject, req.body.message);
   db.Channel.create(req.body)
   .then(channel => res.json(channel))
   .catch(next);

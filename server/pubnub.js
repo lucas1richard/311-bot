@@ -1,6 +1,6 @@
 const Pubnub = require('pubnub');
 
-function publish() {
+function publish(subject, message) {
   const pubnub = new Pubnub({
     publishKey: 'pub-c-c04db793-7660-41f1-84b1-efbda3ef6938',
     subscribeKey: 'sub-c-1813c2b6-54ff-11e7-8ac6-0619f8945a4f'
@@ -9,8 +9,8 @@ function publish() {
   function publishSampleMessage() {
 
     const publishConfig = {
-      channel: 'testname',
-      message: 'Wello Horld blablablabla'
+      channel: subject,
+      message: `${subject} ---> ${message}`
     };
 
     pubnub.publish(publishConfig, (status, response) => {
@@ -35,10 +35,8 @@ function publish() {
 
   console.log('Subscribing..');
   pubnub.subscribe({
-    channels: ['testname2']
+    channels: [subject]
   });
-
-
 }
 
 module.exports = publish;
