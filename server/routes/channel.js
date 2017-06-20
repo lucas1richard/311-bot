@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../db');
-const { publish, subscribe } = require('../pubnub');
+const { publish, subscribe, emit } = require('../pubnub');
 
 module.exports = router;
 
@@ -13,6 +13,7 @@ router.get('/', (req, res, next) => {
     .then(_user => {
       user = _user;
       subscribed = user.channels;
+      subscribe(subscribed.map(ch => ch.subject));
       return db.Channel.findAll();
     })
     .then(channels => {
@@ -25,7 +26,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   let channel, user;
 
-  publish(req.body.subject, req.body.message);
+  publish(req.body.subject, req.body.description);
   db.User.findById(res.locals.userId)
     .then(_user => {
       user = _user;
@@ -54,5 +55,22 @@ router.get('/subscribe/:channelId', (req, res, next) => {
       subscribe(channel.subject);
     })
     .then(() => res.json(channel));
+});
+
+router.post('/update/:subject', (req, res, next) => {
+  emit(req.params.subject, req.body.update);
+  let update;
+
+  db.Update.create({ txt: req.body.update })
+    .then(_update => {
+      update = _update;
+      return db.Channel.findOne({
+        where: {
+          subject: req.params.subject
+        }
+      });
+    })
+    .then(channel => channel.addUpdate(update))
+    .then(() => res.sendStatus(200));
 });
 

@@ -1,6 +1,7 @@
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { getUser } from './reducers/user';
+import { getChannels } from './reducers/channel';
 import reducer from './reducers';
 
 const store = createStore(
@@ -9,7 +10,7 @@ const store = createStore(
   applyMiddleware(thunk)
 );
 
-store.dispatch(getUser());
+store.dispatch(getUser())
+  .then(() => store.dispatch(getChannels()));
 
 export default store;
-

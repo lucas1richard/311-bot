@@ -10,19 +10,10 @@ class Channels extends React.Component {
     super();
   }
 
-  componentDidMount() {
-    this.props.getChannels();
-  }
-
-  componentWillReceiveProps(newProps) {
-    console.log(newProps.subscribed);
-  }
-
   render() {
     const { channels, subscribed } = this.props;
 
     if (!channels) return null;
-    console.log(subscribed);
 
     return (
       <div className="row">

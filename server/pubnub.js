@@ -1,10 +1,20 @@
 const Pubnub = require('pubnub');
 
+const pubnub = new Pubnub({
+  publishKey: 'pub-c-c04db793-7660-41f1-84b1-efbda3ef6938',
+  subscribeKey: 'sub-c-1813c2b6-54ff-11e7-8ac6-0619f8945a4f'
+});
+
+pubnub.addListener({
+  message(msg) {
+    console.log('New message!', msg);
+  },
+  presence(presenceEvent) {
+    // handle presence
+  }
+});
+
 function publish(subject, message) {
-  const pubnub = new Pubnub({
-    publishKey: 'pub-c-c04db793-7660-41f1-84b1-efbda3ef6938',
-    subscribeKey: 'sub-c-1813c2b6-54ff-11e7-8ac6-0619f8945a4f'
-  });
 
   function publishSampleMessage() {
 
@@ -19,19 +29,7 @@ function publish(subject, message) {
 
   }
 
-  pubnub.addListener({
-    status(statusEvent) {
-      if (statusEvent.category === 'PNConnectedCategory') {
-        publishSampleMessage();
-      }
-    },
-    message(msg) {
-      console.log('New message!', msg);
-    },
-    presence(presenceEvent) {
-      // handle presence
-    }
-  });
+
 
   console.log('Subscribing..');
   pubnub.subscribe({
@@ -39,20 +37,27 @@ function publish(subject, message) {
   });
 }
 
-function subscribe(channel) {
-  const pubnub = new Pubnub({
-    publishKey: 'pub-c-c04db793-7660-41f1-84b1-efbda3ef6938',
-    subscribeKey: 'sub-c-1813c2b6-54ff-11e7-8ac6-0619f8945a4f'
-  });
+function emit(channel, update) {
+  const publishConfig = {
+    channel,
+    message: update
+  };
 
-  console.log('Subscribing..');
+  pubnub.publish(publishConfig, (status, response) => {
+    console.log(status, response);
+  });
+}
+
+function subscribe(channels) {
+  console.log(`Subscribing to `);
   pubnub.subscribe({
-    channels: [channel]
+    channels
   });
 }
 
 module.exports = {
   publish,
+  emit,
   subscribe
 };
 

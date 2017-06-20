@@ -51,11 +51,14 @@ export const getChannels = () => dispatch => {
 };
 
 export const makeChannel = channelInfo => dispatch => {
-
   return axios.post('/api/channel', channelInfo, { params: { token: getToken() } })
     .then(({ data }) => {
       dispatch({ type: 'MAKE_CHANNEL', payload: data });
     });
+};
+
+export const postUpdate = (subject, update) => dispatch => {
+  return axios.post(`/api/channel/update/${subject}`, { update });
 };
 
 export default channel;
