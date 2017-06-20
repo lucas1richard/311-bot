@@ -2,17 +2,15 @@ import axios from 'axios';
 
 const channel = (state = [], action) => {
   switch (action.type) {
-  case 'RECEIVE_CHANNELS':
-    state = action.payload;
-    break;
-
-  case 'MAKE_CHANNEL':
-    state = state.slice();
-    state.push(action.payload);
-    break;
-
-  default:
-    break;
+    case 'RECEIVE_CHANNELS':
+      state = state.concat(action.payload);
+      break;
+    case 'MAKE_CHANNEL':
+      state = state.slice();
+      state.push(action.payload);
+      break;
+    default:
+      break;
   }
   return state;
 };
@@ -24,6 +22,7 @@ export const getChannels = () => dispatch => {
       dispatch({ type: 'RECEIVE_CHANNELS', payload: data });
     });
 };
+
 
 export const makeChannel = channelInfo => dispatch => {
   return axios.post('/api/channel', channelInfo)

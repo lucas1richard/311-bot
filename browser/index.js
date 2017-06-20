@@ -12,6 +12,8 @@ import {
 
 import PubForm from './react/PubForm';
 import LogInForm from './react/LogInForm';
+import Channels from './react/Channels';
+
 import Main from './Main';
 
 const app = (
@@ -21,6 +23,7 @@ const app = (
       <Route path="/" component={ Main }>
         <IndexRoute component={ PubForm } />
         <Route path="login" component={ LogInForm } />
+        <Route path="channel" component={ Channels }  />
       </Route>
 
     </Router>

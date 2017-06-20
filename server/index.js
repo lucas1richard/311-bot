@@ -3,7 +3,7 @@ const app = require('./app');
 const path = require('path');
 const db = require('./db');
 
-db.seed();
+db.seed({ force: true });
 
 app.listen(process.env.PORT || 3000, () => console.log(`Listening on ${process.env.PORT || 3000}`));
 

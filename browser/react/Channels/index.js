@@ -13,12 +13,18 @@ class Channels extends React.Component {
   componentDidMount() {
     this.props.getChannels();
   }
+
   render() {
-    if (!this.props.channels) return null;
+
+    const { channels } = this.props;
+
+    if (!channels) return null;
+
+    console.log('channel', channels);
 
     return (
       <div>
-        { this.props.channels.map(channel => <div key={channel.uuid}>{JSON.stringify(channel)}</div>) }
+        {channels.map(channel => <li>{channel.uuid}</li>)}
       </div>
     );
   }
@@ -28,8 +34,11 @@ const mapDispatchToProps = dispatch => ({
   getChannels: () => dispatch(getChannels()),
 });
 
-const mapStateToProps = ({ channels }) => ({
-  channels
-});
+const mapStateToProps = (state) => {
+  return (
+    {
+      channels: state.channel,
+    });
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Channels);
