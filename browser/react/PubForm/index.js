@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Channels from '../Channels';
+
+import { makeChannel } from '../../redux/reducers/channel';
 
 class PubForm extends React.Component {
   constructor() {
@@ -28,11 +32,13 @@ class PubForm extends React.Component {
 
   submitForm(ev) {
     ev.preventDefault();
+    this.props.submitChannel(this.state);
   }
 
   render() {
     return (
       <div className="container">
+        <Channels />
         <h1>Pub Form</h1>
         <form onSubmit={ this.submitForm }>
           <div className="form-group">
@@ -69,4 +75,8 @@ class PubForm extends React.Component {
   }
 }
 
-export default PubForm;
+const mapDispatchToProps = dispatch => ({
+  submitChannel: channelInfo => dispatch(makeChannel(channelInfo))
+});
+
+export default connect(null, mapDispatchToProps)(PubForm);

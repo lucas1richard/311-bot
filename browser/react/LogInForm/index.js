@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 import { login } from '../../redux/reducers/user';
 
 class LogInForm extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       email: '',
@@ -13,14 +14,23 @@ class LogInForm extends React.Component {
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    if (Object.keys(props.user).length) {
+      browserHistory.push('/');
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (Object.keys(newProps.user).length) {
+      browserHistory.push('/');
+    }
   }
 
   changeEmail(ev) {
-    this.setState({ subject: ev.target.value });
+    this.setState({ email: ev.target.value });
   }
 
   changePassword(ev) {
-    this.setState({ description: ev.target.value });
+    this.setState({ password: ev.target.value });
   }
 
   submitForm(ev) {
@@ -59,8 +69,12 @@ class LogInForm extends React.Component {
   }
 }
 
+const mapStateToProps = ({ user }) => ({
+  user
+});
+
 const mapDispatchToProps = dispatch => ({
   login: (email, password) => dispatch(login(email, password))
 });
 
-export default connect(null, mapDispatchToProps)(LogInForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LogInForm);

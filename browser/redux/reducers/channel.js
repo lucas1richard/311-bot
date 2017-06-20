@@ -5,6 +5,10 @@ const channel = (state = [], action) => {
     case 'RECEIVE_CHANNELS':
       state = state.concat(action.payload);
       break;
+    case 'MAKE_CHANNEL':
+      state = state.slice();
+      state.push(action.payload);
+      break;
     default:
       break;
   }
@@ -19,4 +23,11 @@ export const getChannels = () => dispatch => {
     });
 };
 
+
+export const makeChannel = channelInfo => dispatch => {
+  return axios.post('/api/channel', channelInfo)
+    .then(({ data }) => dispatch({ type: 'MAKE_CHANNEL', payload: data }));
+};
+
 export default channel;
+

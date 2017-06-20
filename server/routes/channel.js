@@ -1,5 +1,5 @@
-const router = require( 'express' ).Router();
-const db = require( '../db' );
+const router = require('express').Router();
+const db = require('../db');
 
 module.exports = router;
 
@@ -11,3 +11,8 @@ router.get( '/', ( req, res, next ) => {
     .catch( next );
 } );
 
+router.post('/', (req, res, next) => {
+  db.Channel.create(req.body)
+  .then(channel => res.json(channel))
+  .catch(next);
+});
