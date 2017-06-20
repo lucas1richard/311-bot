@@ -10,7 +10,9 @@ class PubForm extends React.Component {
     this.state = {
       subject: '',
       message: '',
-      description: ''
+      description: '',
+      lat: 0,
+      long: 0
     };
     this.changeSubject = this.changeSubject.bind(this);
     this.changeDescription = this.changeDescription.bind(this);
@@ -18,8 +20,23 @@ class PubForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
   }
 
+  getPosition() {
+    return new Promise(function (resolve, reject) {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  }
+
+  showPosition(position) {
+    const lat = position.coords.latitude;
+    const long = position.coords.longitude;
+    return { lat: lat, long: long };
+  }
+
+
   changeSubject(ev) {
     this.setState({ subject: ev.target.value });
+    this.getPosition()
+      .then((coordinates) => console.log('geo=> ', this.showPosition(coordinates)));
   }
 
   changeDescription(ev) {
@@ -40,13 +57,13 @@ class PubForm extends React.Component {
       <div className="container">
         <Channels />
         <h1>Pub Form</h1>
-        <form onSubmit={ this.submitForm }>
+        <form onSubmit={this.submitForm}>
           <div className="form-group">
             <label>Subject</label>
             <input
               type="text"
-              value={ this.state.subject }
-              onChange={ this.changeSubject }
+              value={this.state.subject}
+              onChange={this.changeSubject}
               className="form-control"
             />
           </div>
@@ -54,16 +71,16 @@ class PubForm extends React.Component {
             <label>Description</label>
             <input
               type="text"
-              value={ this.state.description }
-              onChange={ this.changeDescription }
+              value={this.state.description}
+              onChange={this.changeDescription}
               className="form-control"
             />
           </div>
           <div className="form-group">
             <label>Message</label>
             <textarea
-              value={ this.state.message }
-              onChange={ this.changeMessage }
+              value={this.state.message}
+              onChange={this.changeMessage}
               rows={4}
               className="form-control"
             />
@@ -71,7 +88,7 @@ class PubForm extends React.Component {
           <button className="btn btn-primary">Submit</button>
         </form>
       </div>
-      );
+    );
   }
 }
 
