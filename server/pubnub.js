@@ -39,5 +39,20 @@ function publish(subject, message) {
   });
 }
 
-module.exports = publish;
+function subscribe(channel) {
+  const pubnub = new Pubnub({
+    publishKey: 'pub-c-c04db793-7660-41f1-84b1-efbda3ef6938',
+    subscribeKey: 'sub-c-1813c2b6-54ff-11e7-8ac6-0619f8945a4f'
+  });
+
+  console.log('Subscribing..');
+  pubnub.subscribe({
+    channels: [channel]
+  });
+}
+
+module.exports = {
+  publish,
+  subscribe
+};
 

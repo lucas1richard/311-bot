@@ -1,5 +1,3 @@
-// Just combine reducers defined in other files in this folder
-
 import { combineReducers } from 'redux';
 
 import user from './user';

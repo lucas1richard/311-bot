@@ -14,17 +14,26 @@ class Channels extends React.Component {
     this.props.getChannels();
   }
 
-  render() {
+  componentWillReceiveProps(newProps) {
+    console.log(newProps.subscribed);
+  }
 
-    const { channels } = this.props;
+  render() {
+    const { channels, subscribed } = this.props;
 
     if (!channels) return null;
-
-    console.log('channel', channels);
+    console.log(subscribed);
 
     return (
-      <div>
-        {channels.map(channel => <li>{channel.uuid}</li>)}
+      <div className="row">
+        <div className="col-md-6">
+          <h3>All Channels</h3>
+          {channels.map(channel => <li>{ channel.subject || 'No subject' }</li>)}
+        </div>
+        <div className="col-md-6">
+          <h3>Subscribed Channels</h3>
+          {subscribed.map(channel => <li>{ channel.subject || 'No subject' }</li>)}
+        </div>
       </div>
     );
   }
@@ -34,11 +43,9 @@ const mapDispatchToProps = dispatch => ({
   getChannels: () => dispatch(getChannels()),
 });
 
-const mapStateToProps = (state) => {
-  return (
-    {
-      channels: state.channel,
-    });
-};
+const mapStateToProps = ({ channel }) => ({
+  channels: channel.localChannels,
+  subscribed: channel.subscribedChannels
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Channels);
