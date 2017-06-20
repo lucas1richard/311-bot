@@ -11,10 +11,22 @@ class Channels extends React.Component {
   }
 
   componentDidMount() {
-    getChannels();
+    this.props.getChannels();
   }
+
   render() {
-    return null;
+
+    const { channels } = this.props;
+
+    if (!channels) return null;
+
+    console.log('channel', channels);
+
+    return (
+      <div>
+        {channels.map(channel => <li>{channel.uuid}</li>)}
+      </div>
+    );
   }
 }
 
@@ -25,7 +37,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = (state) => {
   return (
     {
-      channels: state.channels,
+      channels: state.channel,
     });
 };
 

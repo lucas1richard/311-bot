@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const channel = (state = {}, action) => {
+const channel = (state = [], action) => {
   switch (action.type) {
     case 'RECEIVE_CHANNELS':
-      state = Object.assign({}, state, action.payload);
+      state = state.concat(action.payload);
       break;
     default:
       break;
