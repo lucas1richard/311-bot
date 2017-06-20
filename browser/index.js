@@ -13,6 +13,7 @@ import {
 import PubForm from './react/PubForm';
 import LogInForm from './react/LogInForm';
 import Channels from './react/Channels';
+import ChannelDetail from './react/Channels/detail';
 
 import Main from './Main';
 
@@ -24,6 +25,7 @@ const app = (
         <IndexRoute component={ PubForm } />
         <Route path="login" component={ LogInForm } />
         <Route path="channel" component={ Channels }  />
+        <Route path="detail/:subject" component={ ChannelDetail } />
       </Route>
 
     </Router>
